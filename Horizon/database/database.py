@@ -13,6 +13,8 @@ class database():
         #
         # Server object dataset
         self.server: soc.socket
+        # Client object dataset
+        self.client: soc.socket
         #
 
         # Connected client dataset

@@ -39,5 +39,23 @@ class server():
 
 
 class client():
-    def __init__(self, database) -> None:
-        self.database = database
+    def __init__(self, data: database) -> None:
+        self.database = data
+
+    def initializeServer(self):
+        self.database.server = soc.socket(
+            self.database.family, self.database.protocol)
+
+    def acceptServer(self, port, IP):
+        self.database.client.connect((IP, port))
+
+    def recieveMessage(self):
+        while True:
+            data = self.database.client.recv(1024)
+            if data.decode("utf-8") == "":
+                break
+            self.database.messageRecieved = self.database.messageRecieved + \
+                data.decode("utf-8")
+
+    def transmitMessage(self, command: str):
+        self.database.client.sendall(command.encode("utf-8"))
