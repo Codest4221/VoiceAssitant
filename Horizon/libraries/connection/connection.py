@@ -7,6 +7,11 @@ class server():
     def __init__(self, data: database) -> None:
         self.database = data
 
+    def infoDevice(self):
+        print(self.database.hostName)
+        print(self.database.IPaddress)
+        print(self.database.Port)
+
     def initializeServer(self):
         self.database.server = soc.socket(
             self.database.family, self.database.protocol)
@@ -20,6 +25,17 @@ class server():
     def acceptServerThread(self):
         x = thr.Thread(target=self.acceptServer)
         x.start()
+
+    def recieveMessage(self):
+        while True:
+            data = self.database.Connection.recv(1024)
+            if data.decode("utf-8") == "":
+                break
+            self.database.messageRecieved = self.database.messageRecieved + \
+                data.decode("utf-8")
+
+    def transmitMessage(self, command: str):
+        self.database.Connection.sendall(command.encode("utf-8"))
 
 
 class client():

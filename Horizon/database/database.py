@@ -4,16 +4,24 @@ import socket as soc
 class database():
     def __init__(self) -> None:
         # Connection database variable declaration
+        # Constant configuration
         self.Port: int
         self.hostName: str
         self.IPaddress: str
-        self.server: soc.socket
-        self.client: soc.socket
-        self.Connection : soc.socket
-        self.ConnectionIP : str
-        self.message: str
         self.family: soc.AF_INET
         self.protocol: soc.SOCK_STREAM
+        #
+        # Server object dataset
+        self.server: soc.socket
+        #
+
+        # Connected client dataset
+        self.Connection: soc.socket
+        self.ConnectionIP: str
+        self.messageRecieved: str
+        #
+
+        # Configuration function
         self.dataSetCreater()
         #
 
@@ -23,4 +31,3 @@ class database():
         self.protocol: soc.SOCK_STREAM
         self.hostName = soc.gethostname()
         self.IPaddress = soc.gethostbyname(self.hostName)
-        self.message = "Command:None;Arg:None"
