@@ -1,5 +1,5 @@
 from database.database import database
-from libraries.Operation.do import assistantFunction,handerFunction
+from libraries.Operation.do import assistantFunction, handerFunction
 
 
 """ Sturucture of Horizon  
@@ -12,9 +12,7 @@ Identification:
 """
 
 
-
-
 if __name__ == "__main__":
     databaseHorizon = database()
-    functionAssistant = assistantFunction()
-    functionHander = handerFunction()
+    functionAssistant = assistantFunction(databaseHorizon)
+    functionHander = handerFunction(databaseHorizon)
