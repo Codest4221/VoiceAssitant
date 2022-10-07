@@ -16,3 +16,11 @@ if __name__ == "__main__":
     databaseHorizon = database()
     functionAssistant = assistantFunction(databaseHorizon)
     functionHander = handerFunction(databaseHorizon)
+    while True:
+        a = input("Enter Input:")
+        if a == "exit":
+            break
+        elif a == "OpenCamera":
+            functionAssistant.startHander()
+        elif a == "CloseCamera":
+            functionAssistant.stopHander()
