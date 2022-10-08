@@ -1,26 +1,28 @@
 from database.database import database
-from libraries.Operation.do import assistantFunction, handerFunction
-
-
+from libraries.Assistant.Assistant import Assistant
+from libraries.Hander.Hander import Hander
+from libraries.Connector.Connector import Connector
+from libraries.Operation.Operation import Do
+from threading import Thread
 """ Sturucture of Horizon  
 Identification: 
     <=>: Direct Connection 
     <->: Indirect Connection (with the help of main package)
 
-                                            Assistant <-> Do <=> HORIZON <=> Database <-> Assistant   
+                             Connector <=>  Assistant <-> Do <=> HORIZON <=> Database <-> Assistant   
                                             Hander    <->                             <->    Hander 
 """
 
 
 if __name__ == "__main__":
-    databaseHorizon = database()
-    functionAssistant = assistantFunction(databaseHorizon)
-    functionHander = handerFunction(databaseHorizon)
+    # Object Creation
+    databaseHorizon = database()  # Database Object Creation
+    assistant = Assistant(databaseHorizon)
+    hander = Hander(databaseHorizon)
+    connector = Connector(databaseHorizon)
+    do = Do(databaseHorizon)
+    handerThread = Thread(target=hander.main)
+    handerThread.start()
     while True:
-        a = input("Enter Input:")
-        if a == "exit":
+        if databaseHorizon.shutdownProgram == 1:
             break
-        elif a == "OpenCamera":
-            functionAssistant.startHander()
-        elif a == "CloseCamera":
-            functionAssistant.stopHander()
