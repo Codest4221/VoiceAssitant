@@ -23,6 +23,12 @@ if __name__ == "__main__":
     do = Do(databaseHorizon)
     handerThread = Thread(target=hander.main)
     handerThread.start()
+    assistantThread = Thread(target=assistant.main)
+    assistantThread.start()
+    oldtext = ""
     while True:
         if databaseHorizon.shutdownProgram == 1:
             break
+        if databaseHorizon.text == oldtext:
+            print(databaseHorizon.text)
+        oldtext = databaseHorizon.text

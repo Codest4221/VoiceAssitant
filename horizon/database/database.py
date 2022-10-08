@@ -9,6 +9,8 @@ class database():
     def AssistantDatabase(self) -> None:
         self.engine = None
         self.userName = "Mete"
+        self.listener = None
+        self.text = ""
 
     def ConnectorDatabase(self) -> None:
         pass
