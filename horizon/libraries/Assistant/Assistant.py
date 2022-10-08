@@ -15,15 +15,12 @@ class Assistant():
         self.databaseHorizon.listener = sr.Recognizer()
 
     def main(self) -> None:  # Function for initliazing
-        self.databaseHorizon.text: str
-        while True:
-            with sr.Microphone(1) as source:
-                self.databaseHorizon.listener.adjust_for_ambient_noise(
-                    source, 1)
-                self.databaseHorizon.text = self.databaseHorizon.listener.listen(
-                    source)
-                self.databaseHorizon.text = + \
-                    self.databaseHorizon.listener.recognize_google(
-                        self.databaseHorizon.text, language='hi-IN')
-            if self.databaseHorizon.shutdownProgram == 1 or self.databaseHorizon.text.lower() == "quit":
-                break
+        try:
+            self.databaseHorizon.text: str
+            while True:
+                with sr.Microphone(1) as source:
+                    audio_data = self.databaseHorizon.listener.record(source, duration=5)
+                if self.databaseHorizon.shutdownProgram == 1 or self.databaseHorizon.text.lower() == "quit":
+                    break
+        except:
+            print("Error Occured.")
