@@ -10,7 +10,7 @@ class database():
         self.engine = None
         self.userName = "Mete"
         self.listener = None
-        self.text = ""
+        self.text = "kv3"
 
     def ConnectorDatabase(self) -> None:
         pass
