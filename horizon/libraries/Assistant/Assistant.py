@@ -27,4 +27,4 @@ class Assistant():
                 if self.databaseHorizon.shutdownProgram == 1 or self.databaseHorizon.text.lower() == "quit":
                     break
             except:
-                self.databaseHorizon = "No Input"
+                self.databaseHorizon.text = "No Input"
