@@ -12,15 +12,19 @@ class Assistant():
         self.databaseHorizon.engine.say(
             f"Hello {self.databaseHorizon.userName}, I am your assistant , Horizon. Let me help you.")
         self.databaseHorizon.engine.runAndWait()
-        self.databaseHorizon.listener = sr.Recognizer()
 
     def main(self) -> None:  # Function for initliazing
-        try:
-            self.databaseHorizon.text: str
-            while True:
-                with sr.Microphone(1) as source:
-                    audio_data = self.databaseHorizon.listener.record(source, duration=5)
+        self.databaseHorizon.listener = sr.Recognizer()
+        self.databaseHorizon.text: str
+        mic = sr.Microphone()
+        while True:
+            try:
+                with mic as source:
+                    audio_data = self.databaseHorizon.listener.listen(
+                        source)
+                    self.databaseHorizon.text = self.databaseHorizon.listener.recognize_google(
+                        audio_data)
                 if self.databaseHorizon.shutdownProgram == 1 or self.databaseHorizon.text.lower() == "quit":
                     break
-        except:
-            print("Error Occured.")
+            except:
+                self.databaseHorizon = "No Input"

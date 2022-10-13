@@ -29,6 +29,6 @@ if __name__ == "__main__":
     while True:
         if databaseHorizon.shutdownProgram == 1:
             break
-        if databaseHorizon.text == oldtext:
+        if databaseHorizon.text != oldtext:
             print(databaseHorizon.text)
         oldtext = databaseHorizon.text
