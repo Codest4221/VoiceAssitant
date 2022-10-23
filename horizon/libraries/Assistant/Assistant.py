@@ -31,3 +31,4 @@ class Assistant():
                 break
             # except:
                 #self.databaseHorizon.text = "No Input"
+            self.databaseHorizon.commandBuffer.append("weather:[]")

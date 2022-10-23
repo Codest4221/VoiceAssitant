@@ -11,7 +11,7 @@ class database():
         self.userName = "Mete"
         self.listener = None
         self.text = "kv3"
-
+        self.commandBuffer = []
     def ConnectorDatabase(self) -> None:
         pass
 
