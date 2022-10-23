@@ -19,6 +19,7 @@ class database():
         self.captureCamera = None
         self.frame = None
         self.windowName = "Window"
+        self.point = []
 
     def OperationDatabase(self) -> None:
         pass

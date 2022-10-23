@@ -17,7 +17,7 @@ class Assistant():
         self.databaseHorizon.listener = sr.Recognizer()
         self.databaseHorizon.text: str
         mic = sr.Microphone()
-        while True:
+        while False:
             # try:
             with mic as source:
                 audio_data = self.databaseHorizon.listener.listen(
@@ -26,7 +26,7 @@ class Assistant():
                     self.databaseHorizon.text = self.databaseHorizon.listener.recognize_google(
                         audio_data)
                 except:
-                    continue
+                    break
             if self.databaseHorizon.shutdownProgram == 1 or self.databaseHorizon.text.lower() == "quit":
                 break
             # except:
