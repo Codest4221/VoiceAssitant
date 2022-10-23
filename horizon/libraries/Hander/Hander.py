@@ -66,4 +66,3 @@ class Hander():
                                (cx, cy), 15, (255, 0, 255), 2)
 
         self.databaseHorizon.point = lmlist
-        print(self.databaseHorizon.point)
