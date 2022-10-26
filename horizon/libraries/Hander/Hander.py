@@ -1,3 +1,5 @@
+from threading import Thread
+from datetime import datetime
 from database.database import database
 import cv2
 import mediapipe
@@ -28,36 +30,42 @@ class Hander():
         self.mpDraw = mp.solutions.drawing_utils
 
     def main(self) -> None:  # Function for initiliazing
+        tur = 1
         while True:
             ret, self.databaseHorizon.frame = self.databaseHorizon.captureCamera.read()
-            cv2.flip(self.databaseHorizon.frame, 0)
-            self.findPosition(self.findHands(self.databaseHorizon.frame))
             cv2.imshow(self.databaseHorizon.windowName,
                        self.databaseHorizon.frame)
+            if tur == 1:
+                functiondir = Thread(target=self.findHands)
+                functiondir.start()
+                tur = 0
             if cv2.waitKey(1) == ord("q"):
                 self.databaseHorizon.shutdownProgram = 1
                 break
 
-    def findHands(self, img, draw=True):
-        """Returns an image of the detected hand and draws the landmarks"""
-        img = cv2.flip(img, 1)
-        imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        self.results = self.hands.process(imgRGB)
-        if self.results.multi_hand_landmarks:
-            for handlms in self.results.multi_hand_landmarks:
-                if draw:
-                    self.mpDraw.draw_landmarks(
-                        img, handlms, self.mpHands.HAND_CONNECTIONS)
-        return img
+    def findHands(self, draw=True):
+        while True:
+            """Returns an image of the detected hand and draws the landmarks"""
+            imgRGB = cv2.cvtColor(
+                self.databaseHorizon.frame, cv2.COLOR_BGR2RGB)
+            self.results = self.hands.process(imgRGB)
+            if self.results.multi_hand_landmarks:
+                for handlms in self.results.multi_hand_landmarks:
+                    if draw:
+                        self.mpDraw.draw_landmarks(
+                            self.databaseHorizon.frame, handlms, self.mpHands.HAND_CONNECTIONS)
+            self.findPosition()
+            if self.databaseHorizon.shutdownProgram == 1:
+                break
 
-    def findPosition(self, img, handNo=0, draw=True):
+    def findPosition(self, handNo=0, draw=True):
         """Returns a list of the lansdmarks corrdinates"""
         lmlist = []
         if self.results.multi_hand_landmarks:
             myHand = self.results.multi_hand_landmarks[handNo]
             for id, lm in enumerate(myHand.landmark):
                 # print(id,lm)
-                h, w, c = img.shape
+                h, w, c = self.databaseHorizon.frame.shape
                 cx, cy = int(lm.x*w), int(lm.y*h)
                 # print(cx,cy)
                 lmlist.append([id, cx, cy])
@@ -66,3 +74,4 @@ class Hander():
                                (cx, cy), 15, (255, 0, 255), 2)
 
         self.databaseHorizon.point = lmlist
+        print(self.databaseHorizon.point)
