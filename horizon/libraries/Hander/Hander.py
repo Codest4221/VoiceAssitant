@@ -13,6 +13,7 @@ from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 mp = mediapipe.solutions.mediapipe.python
 
 
+
 class Hander():
     def __init__(self, data: database) -> None:
         mode = False
